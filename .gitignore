@@ -1,3 +1,7 @@
+# Dev
+db.sqlite
+glair/app_media
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,13 @@
+{% extends "glair/base.html" %}
+{% load static from staticfiles %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8"><img class="img-responsive" src="{% static object.image.url %}"></div>
+  <div class="col-xs-6 col-md-4">
+  	{{ object.get_exposure_program_display }}<br>
+  	{{ object.iso_speed }}<br>
+  	{{ object.focal_length }}<br>
+	{{ object.exposure_time }}<br>
+	f{{ object.fnumber }}<br>
+  </div>
+{% endblock content %}
