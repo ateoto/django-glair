@@ -1,0 +1,38 @@
+{% extends "glair/base.html" %}
+{% load static from staticfiles %}
+{% block css %}
+	<link href="{% static "glair/css/dropzone.css" %}" rel="stylesheet">
+{% endblock css %}
+{% block js %}
+    <script src="{% static "glair/js/dropzone.min.js" %}"></script>
+    <script>
+    $(function() {
+		Dropzone.options.djangodropzone = {
+			paramName: "image",
+			init: function() {
+				this.on('sending', function(file, xhr, formData) { 
+					formData.append('name', file.name);
+				});
+        this.on('success', function(file, response) {
+          //this.removeFile(file);
+          $('#editzone').append(response.html);
+          console.log(response);
+        });
+			}
+		}
+    });
+    </script>
+{% endblock js %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8">
+	<form id="djangodropzone" class="dropzone" action="{% url "glair-upload" %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  </form>
+  <div id="editzone">
+  </div>
+  </div>
+  <div class="col-xs-6 col-md-4">
+  </div>
+{% endblock content %}

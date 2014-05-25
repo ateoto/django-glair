@@ -6,4 +6,4 @@ from glair.models import Photo
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ['name', 'owner', 'image']
+        fields = ['name', 'image']

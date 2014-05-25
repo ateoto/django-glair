@@ -44,6 +44,7 @@ class Photo(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
     is_private = models.BooleanField(default=False)
     name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
     manufacturer = models.ForeignKey(Manufacturer, editable=False, null=True)
     camera = models.ForeignKey(Camera, editable=False, null=True)
     iso_speed = models.PositiveIntegerField(editable=False, null=True)
@@ -68,6 +69,12 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('photo-detail', kwargs={
+            'id': self.id,
+            'slug': str(self.slug)
+        })
     
     def save(self, *args, **kwargs):
         if not self.pk and not self.slug:
