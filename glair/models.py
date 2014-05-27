@@ -50,7 +50,6 @@ class Photo(models.Model):
     exposure_program = models.PositiveSmallIntegerField(choices=EXPOSURE_PROGRAM_CHOICES, editable=False, null=True)
     taken_on = models.DateTimeField(editable=False, null=True)
     image = models.ImageField(upload_to=make_filename)
-    thumbnail = models.ImageField(upload_to='photos', editable=False, null=True)
     focal_length = models.CharField(max_length=20, editable=False, null=True)
     exposure_time = models.CharField(max_length=20, editable=False, null=True)
     fnumber = models.DecimalField(max_digits=3, decimal_places=1, editable=False, null=True)
@@ -83,10 +82,9 @@ class Photo(models.Model):
 
         super(Photo, self).save(*args, **kwargs)
 
-        if not self.taken_on:
-            self.get_exif()
-        if not self.thumbnail:
-            self.make_thumbnail()
+        if self.image:
+            if not self.taken_on:
+                self.get_exif()
 
     def get_exif(self):
         from django.utils import timezone
@@ -124,23 +122,6 @@ class Photo(models.Model):
 
         self.save()
 
-    def make_thumbnail(self):
-        from PIL import Image
-        from django.core.files import File
-        from cStringIO import StringIO
-        import os
-
-        base, ext = os.path.splitext(os.path.basename(self.image.file.name))
-        
-        img = Image.open(self.image.file.name)
-        img.thumbnail((200,200))
-        outfile = StringIO()
-        img.save(outfile, "JPEG")
-
-        thumbname = '%s_200%s' % (base, ext)
-        self.thumbnail.save(thumbname, File(outfile))
-        
-        self.save()
 
 class Album(models.Model):
     name = models.CharField(max_length=200)

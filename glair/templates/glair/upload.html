@@ -41,11 +41,14 @@
 
       function send_form(element) {
         var form = $(element).parentsUntil('.basic-edit').parent();
-        $.post($(form).attr('action'), $(form).serialize())
-          .done(function(data) {
+        var api_uri = $(form).parent().attr('data-glair-uri');
+        $.ajax({ 
+          url: api_uri, 
+          data: $(form).serialize(), 
+          type: 'PUT'
+        }).done(function(data) {
             console.log(data);
-          });
-
+        });
       }
 
       Dropzone.options.djangodropzone = {
@@ -62,16 +65,9 @@
         }
       }
 
-      $('body').on('change', '.textInput', function(){
+      $('body').on('change', ':input', function(){
         send_form($(this));
       });
-      $('body').on('change', '.checkboxinput', function(){
-        send_form($(this));
-      });
-      $('body').on('change', '.tagwidget', function(){
-        send_form($(this));
-      });
-
     });
     </script>
 {% endblock js %}

@@ -1,7 +1,10 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
+{% load thumbnail %}
 
-<div class="image-editor">
-	<img class="img-responsive" src="{% static object.thumbnail.url %}">
+<div class="image-editor" data-glair-uri="{% url 'photo-detail' object.pk %}">
+	{% thumbnail object.image "200" as im %}
+    <img class="img=responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+	{% endthumbnail %}
 	{% crispy form %}
 </div>
