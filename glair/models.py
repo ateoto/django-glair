@@ -10,7 +10,10 @@ import os
 from datetime import datetime
 from taggit.managers import TaggableManager
 
-
+def make_filename(instance, filename):
+    f, ext = os.path.splitext(filename)
+    return 'photos/%s%s' % (uuid.uuid4().hex, ext.lower())
+ 
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
@@ -25,10 +28,6 @@ class Camera(models.Model):
         return self.name
 
 class Photo(models.Model):
-    def make_filename(instance, filename):
-        f, ext = os.path.splitext(filename)
-        return 'photos/%s%s' % (uuid.uuid4().hex, ext.lower())
- 
     EXPOSURE_PROGRAM_CHOICES = (
         (0, 'Not defined'),
         (1, 'Manual'),
@@ -62,9 +61,6 @@ class Photo(models.Model):
     tags = TaggableManager(blank=True)
 
     class Meta:
-        permissions = (
-            ('glair_upload_allowed', 'Allows user to upload images')
-        )
         get_latest_by = 'uploaded_on'
 
     def __str__(self):
@@ -72,7 +68,7 @@ class Photo(models.Model):
 
     def get_absolute_url(self):
         return reverse('photo-detail', kwargs={
-            'id': self.id,
+            'pk': self.pk,
             'slug': str(self.slug)
         })
     
@@ -81,7 +77,7 @@ class Photo(models.Model):
             self.slug = slugify(self.name)
 
         if self.pk:
-            old = Photo.objects.get(id=self.pk)
+            old = Photo.objects.get(pk=self.pk)
             if self.name != old.name:
                 self.slug = slugify(self.name)
 

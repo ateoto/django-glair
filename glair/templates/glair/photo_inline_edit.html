@@ -1,3 +1,7 @@
 {% load static from staticfiles %}
-<img class="img-responsive" src="{% static object.thumbnail.url %}">
-<input type="text" name="name" value="{{ object.name }}">
+{% load crispy_forms_tags %}
+
+<div class="image-editor">
+	<img class="img-responsive" src="{% static object.thumbnail.url %}">
+	{% crispy form %}
+</div>

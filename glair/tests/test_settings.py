@@ -26,6 +26,8 @@ EXTERNAL_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'taggit',
+    'crispy_forms',
+    'rest_framework',
 ]
 
 INTERNAL_APPS = [
@@ -77,3 +79,10 @@ MEDIA_ROOT = os.path.join(APP_ROOT.parent, 'app_media')
 TEMPLATE_DIRS = (
     Path(APP_ROOT + 'templates'),
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}

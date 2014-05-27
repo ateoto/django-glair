@@ -1,6 +1,6 @@
 from .test_settings import *  # NOQA
 
-EXTERNAL_APPS += ['south']
+#EXTERNAL_APPS += ['south']
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 
