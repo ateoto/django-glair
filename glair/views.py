@@ -29,6 +29,11 @@ class UploadView(FormView):
     template_name = 'glair/upload.html'
     form_class = UploadForm
 
+    def get_context_data(self, **kwargs):
+        context = super(UploadView, self).get_context_data(**kwargs)
+        context['edit_form'] = BasicEditForm()
+        return context
+
     def form_valid(self, form):
         form.instance.owner = self.request.user
         image = form.save()

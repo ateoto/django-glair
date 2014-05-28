@@ -19,6 +19,4 @@ class BasicEditForm(forms.ModelForm):
         super(BasicEditForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
-        self.helper.form_class = 'basic-edit'
-        self.helper.form_method = 'post'
-
+        self.helper.form_id = 'basic-edit'

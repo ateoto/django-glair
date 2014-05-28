@@ -1,9 +1,9 @@
 {% load static from staticfiles %}
 {% load thumbnail %}
 {% thumbnail object.image "200" as im %}  
-<div class="col-lg-2 col-sm-3 col-xs-4">
+<div class="col-lg-3 col-sm-4 col-xs-4">
   <a class="photo-thumb" href="{% url 'photo-detail' object.pk %}">
-    <img class="thumbnail img-responsive" src="{% static im.url %}">
+    <img class="thumbnail img-responsive" src="{% static im.url %}" 	>
   </a>
 </div>
 {% endthumbnail %}
