@@ -4,10 +4,12 @@ from django.views.generic.base import TemplateView
 
 from rest_framework import viewsets, routers
 
-from .views import (PhotoDetail, UploadView, BasicPhotoViewset)
+from .views import (PhotoDetail, UploadView, 
+	BasicPhotoViewset, BasicAlbumViewset)
 
 router = routers.DefaultRouter()
 router.register(r'photos', BasicPhotoViewset)
+router.register(r'albums', BasicAlbumViewset)
 
 urlpatterns = patterns('',
 	url(r'^api/', include(router.urls)),

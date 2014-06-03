@@ -3,7 +3,7 @@ from rest_framework.exceptions import ParseError
 
 from taggit.utils import parse_tags
 
-from .models import Photo
+from .models import Photo, Album
 
 
 class TagListSerializer(serializers.WritableField):
@@ -23,4 +23,13 @@ class BasicPhotoSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Photo
-		fields = ('name', 'is_private', 'description', 'tags')
+		fields = ('id', 'name', 'is_private', 'description', 'tags')
+
+
+class BasicAlbumSerializer(serializers.HyperlinkedModelSerializer):
+	photos = serializers.PrimaryKeyRelatedField(many=True)
+	owner = serializers.Field(source='owner.username')
+
+	class Meta:
+		model = Album
+		fields = ('id', 'name', 'photos')

@@ -15,9 +15,9 @@ from rest_framework import permissions
 
 from sorl.thumbnail import get_thumbnail
 
-from .models import Photo
+from .models import Photo, Album
 from .forms import UploadForm, BasicEditForm
-from .serializers import BasicPhotoSerializer
+from .serializers import BasicPhotoSerializer, BasicAlbumSerializer
 from .permissions import IsOwnerOrReadOnly
 
 logger = logging.getLogger('dev.console')
@@ -60,3 +60,17 @@ class BasicPhotoViewset(viewsets.ModelViewSet):
             saved_photo = Photo.objects.get(pk=obj.pk)
             for tag in obj.tags:
                 saved_photo.tags.add(tag)
+
+class BasicAlbumViewset(viewsets.ModelViewSet):
+    queryset = Album.objects.all()
+    serializer_class = BasicAlbumSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly,)
+
+    def pre_save(self, obj):
+        obj.owner = self.request.user
+        #logger.info(obj.photos)
+
+    def post_save(self, obj, *args, **kwargs):
+        for p in obj.photos.all():
+            logger.info(p)
