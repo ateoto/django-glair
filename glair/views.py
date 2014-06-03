@@ -31,6 +31,7 @@ class UploadView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(UploadView, self).get_context_data(**kwargs)
+        context['albums'] = Album.objects.filter(owner=self.request.user)
         context['edit_form'] = BasicEditForm()
         return context
 

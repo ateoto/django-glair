@@ -19,7 +19,11 @@
 <div class="row">
   <div id="photo-editor" class="col-xs-12 col-sm-6 col-md-8"></div>
   <div id="albums" class="col-xs-6 col-md-4">
-    <p>This is where the albums go.</p>
+    <ul>
+    {% for album in albums %}
+      <li>{{ album.name }}</li>
+    {% endfor %}
+    </ul>
   </div>
 </div>
 <div id="edit-modal" class="modal fade">
