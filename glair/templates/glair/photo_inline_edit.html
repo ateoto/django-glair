@@ -3,7 +3,7 @@
 {% thumbnail object.image "200" as im %}  
 <div class="col-lg-3 col-sm-4 col-xs-4">
   <a class="photo-thumb" href="{% url 'photo-detail' object.pk %}">
-    <img class="thumbnail img-responsive" src="{% static im.url %}" 	>
+    <img draggable="true" id="photo-{{ object.pk }}" class="thumbnail img-responsive" src="{% static im.url %}" data-image-pk="{{ object.pk }}">
   </a>
 </div>
 {% endthumbnail %}

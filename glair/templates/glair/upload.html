@@ -1,6 +1,8 @@
 {% extends "glair/base.html" %}
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
+{% load thumbnail %}
+
 {% block css %}
   <link href="{% static "glair/css/dropzone.css" %}" rel="stylesheet">
 {% endblock css %}
@@ -19,9 +21,10 @@
 <div class="row">
   <div id="photo-editor" class="col-xs-12 col-sm-6 col-md-8"></div>
   <div id="albums" class="col-xs-6 col-md-4">
-    <ul>
+    <h3>Albums</h3>  
+    <ul class="list-group">
     {% for album in albums %}
-      <li>{{ album.name }}</li>
+      <li id="album-{{ album.id }}" class="list-group-item album-container" data-album-pk="{{ album.pk }}">{{ album.name }}</li>
     {% endfor %}
     </ul>
   </div>
